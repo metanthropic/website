@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Metanthropic: Architecting the Physics of AGI
 
-## Getting Started
+Metanthropic is a frontier research institution dedicated to building verifiable, interpretable, and safe Artificial General Intelligence. We move beyond probabilistic scaling to engineer deterministic systems where safety and reasoning are verifiable, intrinsic properties of intelligence.
 
-First, run the development server:
+## ⚛️  Our Thesis: The Glass Box Paradigm
 
-```bash
+Standard AI development relies on "Black Box" scaling, where controllability decreases as capability grows. Metanthropic rejects this alchemy. We operate on the conviction that to trust a mind, you must be able to read its thoughts.
+
+* **Mechanistic Interpretability**: We map neural circuitry to identify the origin of deception and reasoning failures.
+* **Constitutional Design**: Safety axioms are embedded directly into the pre-training objective, penalizing harmful trajectories at the atomic level.
+* **Verifiable Reasoning**: We build "System 2" engines that expose their chain of thought for human verification.
+
+## 🛠 Tech Stack & Architecture
+
+Built with a "Mission Control" aesthetic using cutting-edge frontend technologies:
+
+* **Framework**: Next.js 15 (App Router)
+* **Content Engine**: MDX (Markdown for Research) with dynamic slug routing.
+* **Styling**: Tailwind CSS with custom scientific color palettes.
+* **Animations**: Framer Motion for data-dense UI transitions.
+* **Icons**: Lucide React for technical and scientific symbology.
+
+## 📂 Repository Structure
+
+- \`src/app/\`: Institutional interface (Safety, Research, Support Hub).
+- \`src/content/research/\`: MDX-based research publications.
+- \`src/components/ui/\`: Reusable design system (InteractiveGrid, DecryptedText, SpotlightCard).
+- \`src/lib/\`: MDX utilities and data handlers.
+
+## 🚀 Getting Started
+
+\`\`\`bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📄 Contributing Research
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To add a new research paper, simply add an \`.mdx\` file to \`src/content/research/\` with the appropriate frontmatter.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚖️ License & Charter
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Operating under the Metanthropic Charter: our primary fiduciary duty is to humanity. We commit to stop competing and start assisting any value-aligned project that comes close to building AGI before we do.
+EOF
