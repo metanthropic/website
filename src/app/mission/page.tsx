@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion'; // Added Variants import
 import {
   ArrowRight,
   Target,
@@ -19,13 +19,17 @@ import InteractiveGrid from '@/components/ui/InteractiveGrid';
 
 export default function MissionPage() {
 
-  // Animation Variants
-  const fadeInUp = {
+  // Animation Variants explicitly typed to fix Vercel build error
+  const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
   };
 
-  const staggerContainer = {
+  const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
