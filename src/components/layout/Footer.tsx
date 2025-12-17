@@ -1,7 +1,3 @@
-/* FILE: src/components/sections/Footer.tsx
-   ACTION: Fix all broken routing and update links
-*/
-
 'use client';
 
 import React from 'react';
@@ -36,7 +32,8 @@ export default function Footer() {
       {/* 2. MAIN LINKS GRID */}
       <div className="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 text-sm mb-24">
 
-        {/* Research */}
+        {/* Research (Fixed: Added wrapper div) */}
+        <div className="flex flex-col space-y-4">
           <h3 className="font-bold text-white mb-2">Our Research</h3>
           <Link href="/research/index" className="text-gray-400 hover:text-white transition-colors">Research Index</Link>
           <Link href="/research" className="text-gray-400 hover:text-white transition-colors">Research Overview</Link>
@@ -106,7 +103,6 @@ export default function Footer() {
           All Systems Operational
         </Link>
 
-      </div>
       </div>
     </footer>
   );
