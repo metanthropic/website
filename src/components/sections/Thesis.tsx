@@ -2,8 +2,12 @@
 
 import { Cpu, Network, Lock, GitMerge } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { AUTHORS } from '@/lib/author-data'; // <--- 1. Import Authors
 
 export default function Thesis() {
+  // Convert the AUTHORS record to an array for mapping
+  const authorList = Object.values(AUTHORS);
+
   return (
     <section id="mission" className="relative border-t border-white/10 bg-[#0A0A0A] overflow-hidden">
 
@@ -58,12 +62,25 @@ export default function Thesis() {
             &quot;True general intelligence is not just prediction. It is predictable reasoning. We are solving the &apos;Black Box&apos; problem at the neuron level.&quot;
           </blockquote>
 
-          {/* Founder Signature */}
-          <div className="flex items-center gap-4 text-sm text-gray-500 mb-12">
-            <div>
-              <div className="text-white font-medium">Ekjot Singh</div>
-              <div className="text-xs uppercase tracking-wider">Founder & Director</div>
-            </div>
+          {/* DYNAMIC SIGNATURES BLOCK */}
+          <div className="flex flex-wrap items-start gap-8 text-sm text-gray-500 mb-12">
+            {authorList.map((author) => (
+              <div key={author.name} className="flex flex-col">
+                <a
+                  href={author.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white font-medium hover:text-[#3B82F6] transition-colors"
+                >
+                  {author.name}
+                </a>
+                {author.role && (
+                  <div className="text-xs uppercase tracking-wider opacity-70">
+                    {author.role}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
 
           {/* Core Thesis Paragraphs */}
