@@ -5,12 +5,13 @@ import { getPostBySlug, getAllPosts } from '@/lib/mdx';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/sections/Footer';
 import ShareButton from '@/components/ui/ShareButton';
-import { Linkedin, Twitter, PlayCircle } from 'lucide-react';
+import { Linkedin, Twitter } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 
 import { AUTHORS } from '@/lib/author-data';
 import { MDXButton } from '@/components/mdx/MDXButton';
+import TextToSpeech from '@/components/ui/TextToSpeech';
 
 const components = {
   MDXButton,
@@ -21,6 +22,28 @@ const components = {
 export async function generateStaticParams() {
     const posts = await getAllPosts();
     return posts.map((post) => ({ slug: post.slug }));
+}
+
+// Helper to strip MDX/Markdown for the speech engine
+function cleanMDXForSpeech(mdxContent: string): string {
+    return mdxContent
+        // Remove headers (e.g. ## Title)
+        .replace(/^#+\s+/gm, '')
+        // Remove bold/italic (e.g. **text** or *text*)
+        .replace(/[*_]{1,2}([^*_]+)[*_]{1,2}/g, '$1')
+        // Remove links (e.g. [text](url) -> text)
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        // Remove code blocks
+        .replace(/```[\s\S]*?```/g, '')
+        // Remove inline code
+        .replace(/`([^`]+)`/g, '$1')
+        // Remove images
+        .replace(/!\[([^\]]*)\]\([^)]+\)/g, '')
+        // Remove HTML tags
+        .replace(/<[^>]*>/g, '')
+        // Remove extra whitespace
+        .replace(/\s+/g, ' ')
+        .trim();
 }
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -35,6 +58,18 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
     const { meta, content } = post;
     const postAuthors = (meta.authors || []).map(id => AUTHORS[id]).filter(Boolean);
+
+    // ---------------------------------------------------------
+    // 1. CLEAN THE BODY CONTENT
+    // ---------------------------------------------------------
+    const articleBody = cleanMDXForSpeech(content);
+
+    // ---------------------------------------------------------
+    // 2. COMBINE TITLE, SUMMARY, AND BODY
+    // ---------------------------------------------------------
+    // We add punctuation to ensure the voice pauses naturally between sections.
+    // "Title:" and "Summary:" cues help the listener understand the structure.
+    const spokenText = `Title: ${meta.title}. Summary: ${meta.summary}. ${articleBody}`;
 
     // --- LOGIC: Determine Button State ---
     const primaryLink = meta.paperUrl || meta.actionUrl;
@@ -82,10 +117,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     )}
 
                     <div className="w-full max-w-3xl border-y border-white/10 py-4 flex justify-between items-center text-sm text-gray-400">
-                        <div className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
-                            <PlayCircle size={16} />
-                            <span>Listen to Mission (3 min)</span>
-                        </div>
+                        {/* --- TEXT TO SPEECH COMPONENT --- */}
+                        <TextToSpeech text={spokenText} />
+
                         <ShareButton title={meta.title} />
                     </div>
                 </header>
