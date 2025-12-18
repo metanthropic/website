@@ -15,8 +15,9 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/sections/Footer';
 import ResearchTracks from '@/components/sections/ResearchTracks';
 import Link from 'next/link';
-import Image from 'next/image'; // <--- 1. Import Image
+import Image from 'next/image';
 import { RESEARCH_DATA } from '@/lib/research-data';
+import { AUTHORS } from '@/lib/author-data'; // <--- 1. Import Authors
 
 export default function ResearchPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,6 +38,9 @@ export default function ResearchPage() {
       </div>
     );
   }
+
+  // <--- 2. Resolve Authors for Featured Paper
+  const paperAuthors = (featuredPaper.authors || []).map(id => AUTHORS[id]).filter(Boolean);
 
   return (
     <div className="min-h-screen bg-[#030304] text-[#EDEDED] font-sans selection:bg-[#3B82F6] selection:text-white">
@@ -127,9 +131,22 @@ export default function ResearchPage() {
                   {featuredPaper.title}
                 </h1>
 
-                <div className="flex items-center gap-2 mb-8 text-sm text-gray-400">
-                   <Users size={16} className="text-[#3B82F6]" />
-                   <span className="text-white">Ekjot Singh</span>, Director & Lead Researcher
+                {/* <--- 3. Updated Dynamic Author Section --- > */}
+                <div className="flex flex-wrap items-center gap-4 mb-8 text-sm text-gray-400">
+                   <div className="flex items-center gap-2">
+                     <Users size={16} className="text-[#3B82F6]" />
+                     {paperAuthors.length > 0 ? (
+                       paperAuthors.map((author, i) => (
+                         <span key={author.name}>
+                           <span className="text-white font-medium">{author.name}</span>
+                           {i < paperAuthors.length - 1 && <span className="mx-2 opacity-50">/</span>}
+                         </span>
+                       ))
+                     ) : (
+                       // Fallback if no authors found
+                       <span className="text-white">Metanthropic Research</span>
+                     )}
+                   </div>
                 </div>
 
                 <p className="text-gray-400 leading-relaxed font-light">
