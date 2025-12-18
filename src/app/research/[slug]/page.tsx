@@ -1,5 +1,6 @@
 /* FILE: src/app/research/[slug]/page.tsx */
 import React from 'react';
+import { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getPostBySlug, getAllPosts } from '@/lib/mdx';
 import Navbar from '@/components/layout/Navbar';
@@ -19,30 +20,56 @@ const components = {
   Image,
 };
 
+// --- DYNAMIC SEO METADATA ---
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params;
+    try {
+        const post = await getPostBySlug(slug);
+        return {
+            title: post.meta.title,
+            description: post.meta.summary,
+            openGraph: {
+                title: post.meta.title,
+                description: post.meta.summary,
+                images: [post.meta.image || '/images/announcement.png'],
+                type: 'article',
+                publishedTime: post.meta.date,
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: post.meta.title,
+                description: post.meta.summary,
+                images: [post.meta.image || '/images/announcement.png'],
+            }
+        };
+    } catch (e) {
+        return { title: 'Post Not Found' };
+    }
+}
+
 export async function generateStaticParams() {
     const posts = await getAllPosts();
     return posts.map((post) => ({ slug: post.slug }));
 }
 
-// Helper to strip MDX/Markdown for the speech engine
+// --- HELPER: CLEAN MDX FOR SPEECH ---
 function cleanMDXForSpeech(mdxContent: string): string {
     return mdxContent
-        // Remove headers (e.g. ## Title)
+        // 1. Add period after headers so they don't merge with body text
+        .replace(/^(#+\s+.*)$/gm, '$1. ')
         .replace(/^#+\s+/gm, '')
-        // Remove bold/italic (e.g. **text** or *text*)
+        // 2. Remove formatting
         .replace(/[*_]{1,2}([^*_]+)[*_]{1,2}/g, '$1')
-        // Remove links (e.g. [text](url) -> text)
         .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-        // Remove code blocks
         .replace(/```[\s\S]*?```/g, '')
-        // Remove inline code
         .replace(/`([^`]+)`/g, '$1')
-        // Remove images
         .replace(/!\[([^\]]*)\]\([^)]+\)/g, '')
-        // Remove HTML tags
         .replace(/<[^>]*>/g, '')
-        // Remove extra whitespace
+        // 3. Replace newlines with periods to force natural sentence breaks
+        .replace(/\n+/g, '. ')
+        // 4. Cleanup multiple spaces/dots
         .replace(/\s+/g, ' ')
+        .replace(/\.\./g, '.')
         .trim();
 }
 
@@ -59,19 +86,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     const { meta, content } = post;
     const postAuthors = (meta.authors || []).map(id => AUTHORS[id]).filter(Boolean);
 
-    // ---------------------------------------------------------
-    // 1. CLEAN THE BODY CONTENT
-    // ---------------------------------------------------------
+    // Prepare combined text for the speech engine
     const articleBody = cleanMDXForSpeech(content);
-
-    // ---------------------------------------------------------
-    // 2. COMBINE TITLE, SUMMARY, AND BODY
-    // ---------------------------------------------------------
-    // We add punctuation to ensure the voice pauses naturally between sections.
-    // "Title:" and "Summary:" cues help the listener understand the structure.
     const spokenText = `Title: ${meta.title}. Summary: ${meta.summary}. ${articleBody}`;
 
-    // --- LOGIC: Determine Button State ---
+    // Logic for the primary action button
     const primaryLink = meta.paperUrl || meta.actionUrl;
     const primaryLabel = meta.paperUrl ? "Read paper" : (meta.actionLabel || "View Resource");
 
@@ -80,9 +99,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <Navbar />
 
             <main className="pt-32 pb-20">
-
                 <header className="max-w-4xl mx-auto px-6 mb-12 text-center flex flex-col items-center">
-
                     <div className="flex items-center gap-3 mb-6 text-xs font-medium uppercase tracking-widest text-gray-500">
                         <span>{meta.date}</span>
                         {meta.tags && meta.tags.map((tag, i) => (
@@ -101,7 +118,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                         {meta.summary}
                     </p>
 
-                    {/* --- DYNAMIC ACTION BUTTON --- */}
                     {primaryLink && (
                         <a
                             href={primaryLink}
@@ -117,9 +133,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     )}
 
                     <div className="w-full max-w-3xl border-y border-white/10 py-4 flex justify-between items-center text-sm text-gray-400">
-                        {/* --- TEXT TO SPEECH COMPONENT --- */}
                         <TextToSpeech text={spokenText} />
-
                         <ShareButton title={meta.title} />
                     </div>
                 </header>
@@ -137,7 +151,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,#0a0a0a00,#0a0a0a)] z-10 opacity-60 pointer-events-none" />
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#3B82F6_0%,transparent_70%)] opacity-20 pointer-events-none" />
                     </div>
-
                     <div className="text-center text-xs text-gray-600 font-mono mt-4 uppercase tracking-wider">
                         {meta.imageCaption || "Figure 1"}
                     </div>
@@ -190,7 +203,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                         </div>
                     </div>
                 </article>
-
             </main>
             <Footer />
         </div>
