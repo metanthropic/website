@@ -1,6 +1,5 @@
 export type Category = 'All' | 'Publication' | 'Milestone' | 'Release' | 'Product';
 
-// CHANGED: Generic, high-level tech categories
 export type Tech =
 | 'Foundation Models'
 | 'Reasoning Systems'
@@ -14,7 +13,6 @@ export type Tech =
 | 'Robotics'
 | 'General';
 
-// (Topics can stay the same as they are standard academic fields)
 export type Topic =
 | 'AGI'
 | 'Founding'
@@ -45,9 +43,22 @@ export interface ResearchItem {
     image?: string;
     tech?: Tech[];
     topics?: Topic[];
+    authors?: string[]; // <--- NEW FIELD
 }
 
 export const RESEARCH_DATA: ResearchItem[] = [
+    {
+        id: '2',
+        category: 'Publication',
+        date: 'Dec 17, 2025',
+        title: 'Dataset Distillation for the Pre-Training Era',
+        summary: 'We introduce Linear Gradient Matching, a method that condenses massive datasets into a single synthetic image per class, revealing the shared representations across different AI models.',
+        link: '/research/dataset-distillation',
+        image: '/images/research/dataset-distillation/thumbnail.png',
+        tech: ['Generative Vision', 'Foundation Models'],
+        topics: ['Learning Paradigms', 'Generative Models', 'Transformers'],
+        authors: ['metanthropic', 'ekjot-singh'] // <--- ADDED AUTHORS
+    },
     {
         id: '1',
         category: 'Milestone',
@@ -58,5 +69,6 @@ export const RESEARCH_DATA: ResearchItem[] = [
         image: '/images/announcement.png',
         tech: ['General'],
         topics: ['AGI', 'Safety'],
+        authors: ['metanthropic', 'ekjot-singh'] // <--- ADDED AUTHORS
     },
 ];
