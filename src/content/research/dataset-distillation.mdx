@@ -1,0 +1,88 @@
+---
+title: "Dataset Distillation for the Pre-Training Era"
+publishedAt: "2025-12-17"
+summary: "We introduce Linear Gradient Matching, a method that condenses massive datasets into a single synthetic image per class, revealing the shared 'Platonic' representations across different AI models."
+authors: ["metanthropic", "ekjot-singh"]
+image: "/images/research/dataset-distillation/thumbnail.png"
+paperUrl: "/papers/dataset-distillation.pdf"
+imageCaption: "Figure 1: Visual representation of dataset condensation, showing a large dataset being distilled into a single synthetic image."
+---
+
+{/* --- PROJECT LINKS --- */}
+<div className="flex flex-wrap gap-4 mb-12 not-prose items-center">
+  <span className="text-xs text-gray-500 font-mono uppercase tracking-widest ml-2 hidden sm:block">
+    Artifacts Available:
+  </span>
+  <MDXButton href="https://github.com/metanthropics/DDPTECMGLGM">
+    View Code
+  </MDXButton>
+  <MDXButton href="https://metanthropics.github.io/DDPTECMGLGM-website/">
+    Project Website
+  </MDXButton>
+</div>
+
+## The Platonic Representation Hypothesis
+
+Motivated by the [Platonic Representation Hypothesis](https://arxiv.org/abs/2405.07987)—which suggests that diverse foundation models converge toward shared representations of reality—we explore whether synthetic data optimized for one architecture can train another.
+
+We demonstrate that a **single synthetic image per class** is sufficient to train linear probes that not only achieve competitive performance across a diverse array of vision backbones (CLIP, DINO-v2, EVA-02) but consistently outperform baselines constructed from real images.
+
+## Method: Linear Gradient Matching
+
+Our approach departs from traditional distillation which targets full network training. Instead, we target the regime of **linear probing**—training lightweight classifiers atop frozen, pre-trained feature extractors.
+
+The core insight relies on two principles:
+1.  For a linear probe, **matching the gradient of the loss** with respect to the weights is sufficient to align training trajectories.
+2.  By minimizing the angular distance between gradients induced by real and synthetic data, we force synthetic images to encode features that point the optimization in the correct direction.
+
+<figure className="my-12">
+<img
+src="/images/research/dataset-distillation/figure-2.png"
+alt="Method Overview Diagram"
+className="rounded-lg border border-white/10 w-full"
+/>
+<figcaption className="mt-4 text-sm text-gray-400 text-center">
+<strong>Figure 2: Linear Gradient Matching.</strong> We optimize synthetic pixels such that they induce the same gradient updates on a linear classifier as a batch of real data.
+</figcaption>
+</figure>
+
+## Why Synthetic Beats Real
+
+A surprising finding in our research is that synthetic data often outperforms representative real data (such as class centroids). **Why?**
+
+We hypothesize that gradient matching drives synthetic prototypes to the **"boundary"** of the class distribution to maximize discriminative power. As visualized below in the PCA projection:
+* **Real images (dots)** cluster around the mean.
+* **Distilled images (stars)** consistently locate themselves at the periphery, effectively acting as **support vectors**.
+
+<figure className="my-12">
+<img
+src="/images/research/dataset-distillation/figure-4.png"
+alt="PCA Visualization of Embedding Space"
+className="rounded-lg border border-white/10 w-full"
+/>
+<figcaption className="mt-4 text-sm text-gray-400 text-center">
+<strong>Figure 3: PCA Visualization.</strong> Real images (dots) cluster around the mean, while our distilled images (stars) push to the decision boundaries.
+</figcaption>
+</figure>
+
+## Diagnosing Model Biases
+
+Beyond efficiency, these distilled datasets serve as potent diagnostic tools. They allow us to "see" what a model prioritizes. In our experiments with the "Spawrious" dataset (containing correlations like dogs on specific backgrounds), we found:
+
+* **DINO-v2:** The distilled image retains the object (dog), showing robustness to background noise.
+* **MoCo-v3:** The distilled image focuses almost entirely on the background. This explains why MoCo fails on the test set—it was looking at the wrong features.
+
+<figure className="my-12">
+<img
+src="/images/research/dataset-distillation/figure-6.png"
+alt="Spurious Correlations Visualization"
+className="rounded-lg border border-white/10 w-full"
+/>
+<figcaption className="mt-4 text-sm text-gray-400 text-center">
+<strong>Figure 4: Visualizing Spurious Correlations.</strong> The synthetic images expose the underlying biases of the models.
+</figcaption>
+</figure>
+
+## Conclusion
+
+Linear Gradient Matching adapts dataset distillation to the pre-training era. By treating alignment as a quantifiable property of the gradient space, we have shown that it is possible to compress massive datasets into compact, transferable representations that not only train models efficiently but also **illuminate the internal physics of their representations.**
