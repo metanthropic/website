@@ -48,8 +48,14 @@ export default function Hero() {
                 >
                     Solving Artificial <br />
                     <span className="text-white drop-shadow-lg">
-                        {/* Using the DecryptedText effect on the core phrase */}
-                        <DecryptedText text="General Intelligence." />
+                        {/* Mobile: Static text to ensure layout stability */}
+                        <span className="md:hidden">General Intelligence.</span>
+
+                        {/* Desktop: Animated DecryptedText component */}
+                        <DecryptedText
+                            text="General Intelligence."
+                            className="hidden md:inline-block"
+                        />
                     </span>
                 </motion.h1>
 
