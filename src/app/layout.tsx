@@ -7,79 +7,97 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const lora = Lora({ subsets: ["latin"], variable: "--font-lora" });
 
 export const metadata: Metadata = {
-  // 1. Base URL for all relative links (images, og:url)
-  metadataBase: new URL('https://metanthropic.vercel.app'),
+    metadataBase: new URL('https://metanthropic.vercel.app'),
 
-  // 2. Title Template: "Page Name | Metanthropic"
-  title: {
-    default: "Metanthropic",
-    template: "%s | Metanthropic",
-  },
-
-  description: "An research organization dedicated to safe and broadly beneficial Artificial General Intelligence.",
-
-  keywords: ["AI", "AGI", "Machine Learning", "Safety", "Interpretability", "Research", "Metanthropic"],
-
-  authors: [{ name: "Metanthropic Lab" }],
-  creator: "Metanthropic Lab",
-
-  // 3. Open Graph (Facebook, LinkedIn, Discord)
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://metanthropic.vercel.app",
-    title: "Metanthropic",
-    description: "Building safe and broadly beneficial Artificial General Intelligence.",
-    siteName: "Metanthropic",
-    images: [
-      {
-        url: "/images/announcement.png", // Uses your existing branding image
-        width: 1200,
-        height: 630,
-        alt: "Metanthropic Research Lab",
-      },
-    ],
-  },
-
-  // 4. Twitter Cards
-  twitter: {
-    card: "summary_large_image",
-    title: "Metanthropic",
-    description: "Dedicated to safe and broadly beneficial AGI.",
-    images: ["/images/announcement.png"],
-    creator: "@metanthropic", // Update if your handle is different
-  },
-
-  icons: {
-    icon: "/favicon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
-  },
-
-  // 5. Robots (Ensure Google indexes you)
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+    title: {
+        default: "Metanthropic | Building Safe & Beneficial AGI",
+        template: "%s | Metanthropic",
     },
-  },
+
+    description: "Metanthropic is an AI research laboratory dedicated to solving the physics of intelligence. We build verifiable, interpretable AGI systems where safety is an intrinsic property.",
+
+    keywords: [
+        "AI",
+        "AGI",
+        "Artificial General Intelligence",
+        "Machine Learning",
+        "AI Safety",
+        "Interpretability",
+        "Research",
+        "Constitutional AI",
+        "Mechanistic Interpretability",
+        "AI Alignment",
+        "Deep Learning",
+        "Neural Networks"
+    ],
+
+    authors: [{ name: "Metanthropic Research Lab" }],
+    creator: "Metanthropic",
+    publisher: "Metanthropic",
+
+    openGraph: {
+        type: "website",
+        locale: "en_US",
+        url: "https://metanthropic.vercel.app",
+        title: "Metanthropic | Building Safe & Beneficial AGI",
+        description: "An AI research laboratory dedicated to solving the physics of intelligence through verifiable, interpretable systems.",
+        siteName: "Metanthropic",
+        images: [
+            {
+                url: "/images/og/og-home.png",
+                width: 1200,
+                height: 630,
+                alt: "Metanthropic - Solving the Physics of Intelligence",
+            },
+        ],
+    },
+
+    twitter: {
+        card: "summary_large_image",
+        title: "Metanthropic | Building Safe & Beneficial AGI",
+        description: "Dedicated to solving the physics of intelligence through verifiable AI systems.",
+        images: ["/images/og/og-home.png"],
+        creator: "@ek10sh",
+        site: "@ek10sh",
+    },
+
+    icons: {
+        icon: "/favicon.png",
+        shortcut: "/icon-small.png",
+        apple: "/icon-small.png",
+    },
+
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
+    },
+
+    alternates: {
+        canonical: 'https://metanthropic.vercel.app',
+    },
+
+    verification: {
+        google: 'your-google-verification-code',
+    },
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${lora.variable} font-sans antialiased bg-[#030304]`}>
-        {children}
-      </body>
-    </html>
-  );
+        children: React.ReactNode;
+    }>) {
+    return (
+        <html lang="en" className="scroll-smooth">
+            <body className={`${inter.variable} ${lora.variable} font-sans antialiased bg-[#030304]`}>
+                {children}
+            </body>
+        </html>
+    );
 }
