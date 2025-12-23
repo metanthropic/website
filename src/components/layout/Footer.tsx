@@ -88,7 +88,7 @@ export default function Footer() {
       <div className="max-w-[1400px] mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
 
         <div className="flex gap-6 text-gray-400">
-          <a href="#" target='_blank' className="hover:text-white transition-colors"><Twitter size={20} /></a>
+          <a href="https://x.com/ek10sh" target='_blank' className="hover:text-white transition-colors"><Twitter size={20} /></a>
           <a href="https://www.linkedin.com/company/metanthropic/" target='_blank' className="hover:text-white transition-colors"><Linkedin size={20} /></a>
           <a href="https://github.com/metanthropics" target='_blank' className="hover:text-white transition-colors"><Github size={20} /></a>
           <a href="#" target='_blank' className="hover:text-white transition-colors"><Youtube size={20} /></a>
