@@ -1,3 +1,4 @@
+/* FILE: src/app/policies/layout.tsx - UPDATE THE METADATA */
 'use client';
 
 import React from 'react';
@@ -6,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/sections/Footer';
 
-// UPDATED ORDER
 const POLICY_LINKS = [
   { label: 'Privacy Policy', href: '/policies/privacy' },
   { label: 'Responsible Disclosure', href: '/policies/disclosure' },
@@ -23,8 +23,6 @@ export default function PoliciesLayout({ children }: { children: React.ReactNode
       <Navbar />
 
       <main className="pt-32 pb-24 max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12">
-
-        {/* SIDEBAR */}
         <aside className="md:col-span-3 hidden md:block sticky top-32 h-fit">
           <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6 px-3">
             Terms & Policies
@@ -49,13 +47,12 @@ export default function PoliciesLayout({ children }: { children: React.ReactNode
           </nav>
         </aside>
 
-        {/* CONTENT */}
+
         <div className="md:col-span-9">
            <div className="prose prose-invert prose-lg max-w-none prose-headings:font-serif prose-headings:text-white prose-a:text-[#3B82F6] prose-p:text-gray-400 prose-li:text-gray-400 prose-strong:text-white">
               {children}
            </div>
         </div>
-
       </main>
       <Footer />
     </div>
