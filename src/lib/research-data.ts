@@ -48,6 +48,18 @@ export interface ResearchItem {
 
 export const RESEARCH_DATA: ResearchItem[] = [
     {
+        id: '3',
+        category: 'Publication',
+        date: 'Dec 23, 2025',
+        title: 'The Fragility of Guardrails: Cognitive Jamming and Repetition Collapse in Safety-Steered LLMs',
+        summary: 'We conduct a mechanistic audit of the LLM residual stream, deploying Sparse Autoencoders to reveal how models spontaneously construct internal physics engines—and how fragile these representations are to perturbation.',
+        link: '/research/fragility-of-guardrails',
+        image: '/images/research/fragility-of-guardrails/thumbnail.png',
+        tech: ['Interpretability Tools', 'Safety Frameworks', 'Reasoning Systems'],
+        topics: ['Safety', 'Language', 'Transformers', 'Reasoning & Policy'],
+        authors: ['metanthropic', 'ekjot-singh']
+    },
+    {
         id: '2',
         category: 'Publication',
         date: 'Dec 17, 2025',
