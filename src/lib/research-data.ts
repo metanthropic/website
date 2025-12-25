@@ -54,7 +54,7 @@ export const RESEARCH_DATA: ResearchItem[] = [
         title: 'The Fragility of Guardrails: Cognitive Jamming and Repetition Collapse in Safety-Steered LLMs',
         summary: 'We conduct a mechanistic audit of the LLM residual stream, deploying Sparse Autoencoders to reveal how models spontaneously construct internal physics engines—and how fragile these representations are to perturbation.',
         link: '/research/fragility-of-guardrails',
-        image: '/images/research/fragility-of-guardrails/thumbnail.png',
+        image: '/images/research/fragility-of-guardrails/fig1.png',
         tech: ['Interpretability Tools', 'Safety Frameworks', 'Reasoning Systems'],
         topics: ['Safety', 'Language', 'Transformers', 'Reasoning & Policy'],
         authors: ['metanthropic', 'ekjot-singh']
@@ -69,7 +69,7 @@ export const RESEARCH_DATA: ResearchItem[] = [
         image: '/images/research/dataset-distillation/thumbnail.png',
         tech: ['Generative Vision', 'Foundation Models'],
         topics: ['Learning Paradigms', 'Generative Models', 'Transformers'],
-        authors: ['metanthropic', 'ekjot-singh'] // <--- ADDED AUTHORS
+        authors: ['metanthropic', 'ekjot-singh']
     },
     {
         id: '1',
@@ -81,6 +81,6 @@ export const RESEARCH_DATA: ResearchItem[] = [
         image: '/images/announcement.png',
         tech: ['General'],
         topics: ['AGI', 'Safety'],
-        authors: ['metanthropic', 'ekjot-singh'] // <--- ADDED AUTHORS
+        authors: ['metanthropic', 'ekjot-singh']
     },
 ];
