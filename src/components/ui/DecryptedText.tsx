@@ -5,7 +5,17 @@ import { motion } from 'framer-motion';
 
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
 
-export default function DecryptedText({ text, className = '' }: { text: string, className?: string }) {
+interface DecryptedTextProps {
+  text: string;
+  className?: string;
+  animateOnHover?: boolean;
+}
+
+export default function DecryptedText({
+  text,
+  className = '',
+  animateOnHover = false
+}: DecryptedTextProps) {
   const [displayText, setDisplayText] = useState('');
   const [isHovered, setIsHovered] = useState(false);
 
@@ -30,8 +40,8 @@ export default function DecryptedText({ text, className = '' }: { text: string, 
   return (
     <motion.span
       className={className}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      onHoverStart={() => animateOnHover && setIsHovered(true)}
+      onHoverEnd={() => animateOnHover && setIsHovered(false)}
     >
       {displayText}
     </motion.span>
