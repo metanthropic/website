@@ -47,6 +47,7 @@ export default function Navbar() {
               src="/icon.png"
               alt="Metanthropic Logo"
               fill
+              sizes="32px"
               className="object-contain"
             />
           </div>
